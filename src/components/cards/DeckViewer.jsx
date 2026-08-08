@@ -1,12 +1,9 @@
 "use client";
 
-import { useEffect, useRef, useState} from "react";
-import CardBack from "@/components/cards/CardBack";
-import DeckCard from "@/components/cards/DeckCard";
+import { useState } from "react";
 import DeckControls from "@/components/cards/DeckControls";
-import DeckCover from "@/components/cards/DeckCover";
-import DeckGrid from "@/components/cards/DeckGrid";
-import EmptyDeckState from "@/components/cards/EmptyDeckState";
+import DeckGridView from "@/components/cards/DeckGridView";
+import DeckStackView from "@/components/cards/DeckStackView";
 import useDeck from "@/hooks/useDeck";
 
 export default function DeckViewer({
@@ -35,35 +32,6 @@ export default function DeckViewer({
     } = useDeck(cards);
 
     const [viewMode, setViewMode] = useState("deck");
-    const cardsRef = useRef(null);
-    const hasAutoScrolled = useRef(false);
-
-    useEffect(() => {
-        if (
-            !hasStarted ||
-            viewMode !== "deck" ||
-            hasAutoScrolled.current
-        ) {
-            return;
-        }
-
-        const isSmallScreen = window.matchMedia(
-            "(max-width: 639px)"
-        ).matches;
-
-        if (!isSmallScreen) {
-            return;
-        }
-
-        requestAnimationFrame(() => {
-            cardsRef.current?.scrollIntoView({
-                behavior: "smooth",
-                block: "start",
-            });
-        });
-
-        hasAutoScrolled.current = true;
-    }, [hasStarted, viewMode]);
 
     function handleToggleView() {
         setViewMode((currentMode) =>
@@ -71,71 +39,28 @@ export default function DeckViewer({
         );
     }
 
-    const currentCards = visibleCards.slice(
-        0,
-        currentCardIndex + 1
-    );
-
     return (
-        <> {viewMode === "grid" ? (
-                <DeckGrid 
+        <>
+            {viewMode === "grid" ? (
+                <DeckGridView
                     cards={visibleCards}
                     coverImage={coverImage}
                     favoriteCardIds={favoriteCardIds}
                 />
             ) : (
-                <section className="mx-auto mt-12 grid max-w-5xl grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                    {!hasStarted ? (
-                        <DeckCover
-                            coverImage={coverImage}
-                            onStart={startDeck}
-                        />
-                    ) : visibleCards.length === 0 ? (
-                        <EmptyDeckState
-                            message={
-                                showFavoritesOnly
-                                    ? "No favourites"
-                                    : "No cards in this deck"
-                            }
-                        />
-                    ) : (
-                        <>
-                            {/* Left side */}
-                            {remainingCards > 0 ? (
-                                <CardBack
-                                    coverImage={coverImage}
-                                    onClick={handleNextCard}
-                                />
-                            ) : (
-                                <EmptyDeckState
-                                    message="No cards remaining"
-                                    onRestart={handleRestart}
-                                    showRestart
-                                />
-                            )}
-
-                            {/* Right side: keep the pile rendered */}
-                            <div
-                                ref={cardsRef}
-                                className={`relative mt-6 min-h-[400px] w-full ${isRestarting
-                                    ? "deck-exit"
-                                    : ""
-                                    }`}
-                            >
-                                {currentCards.map((card, index) => (
-                                    <DeckCard
-                                        key={card.id}
-                                        card={card}
-                                        index={index}
-                                    />
-                                ))}
-                            </div>
-                        </>
-                    )}
-                </section>
-            )
-        }
-            
+                <DeckStackView
+                    hasStarted={hasStarted}
+                    isRestarting={isRestarting}
+                    visibleCards={visibleCards}
+                    currentCardIndex={currentCardIndex}
+                    remainingCards={remainingCards}
+                    showFavoritesOnly={showFavoritesOnly}
+                    coverImage={coverImage}
+                    onStart={startDeck}
+                    onNextCard={handleNextCard}
+                    onRestart={handleRestart}
+                />
+            )}
 
             <DeckControls
                 onPrevious={handlePreviousCard}
