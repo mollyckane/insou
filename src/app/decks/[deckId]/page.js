@@ -1,3 +1,4 @@
+import { notFound } from "next/navigation";
 import Link from "next/link";
 import {
     decks,
@@ -15,13 +16,12 @@ const cardsByDeckId = {
 
 export default async function DeckPage({ params }) {
     const { deckId } = await params;
-
     const selectedDeck = decks.find(
         (deck) => deck.id === deckId
     );
-
+    
     if (!selectedDeck) {
-        return null;
+        notFound();
     }
 
     const cards = cardsByDeckId[selectedDeck.id] ?? [];
