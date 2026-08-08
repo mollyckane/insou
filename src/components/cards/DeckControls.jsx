@@ -13,12 +13,13 @@ export default function DeckControls({
     onToggleFavoritesOnly,
     canGoPrevious = false,
     canGoNext = false,
+    canToggleFavorite = false,
     viewMode = "deck",
     showFavoritesOnly = false,
     isCurrentCardFavorite = false,
 }) {
-    const previousDisabled = canGoPrevious !== true;
-    const nextDisabled = canGoNext !== true;
+    const previousDisabled = !Boolean(canGoPrevious);
+    const nextDisabled = !Boolean(canGoNext);
 
     return (
         <div className="mt-8 flex flex-wrap items-center gap-3">
@@ -60,7 +61,9 @@ export default function DeckControls({
             <button
                 type="button"
                 onClick={onToggleFavorite}
+                disabled={!canToggleFavorite}
                 aria-pressed={isCurrentCardFavorite}
+                aria-label={isCurrentCardFavorite ? "Unfavourite this card" : "Favourite this card"}
                 className={`${controlButtonClasses} ${isCurrentCardFavorite ? "group bg-yellow-500 border-yellow-600 hover:bg-stone-300 hover:border-stone-400 hover:text-stone-700 text-white font-bold" : ""}`}
             >
                 {isCurrentCardFavorite ? (

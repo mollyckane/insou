@@ -1,9 +1,9 @@
 'use client';
 
-import Image from 'next/image';
+import DeckCard from '@/components/cards/DeckCard';
 import DeckControls from '@/components/cards/DeckControls';
 import CardBack from '@/components/cards/CardBack';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function DeckViewer({ cards, coverImage }) {
     const [hasStarted, setHasStarted ] = useState(false);
@@ -11,6 +11,47 @@ export default function DeckViewer({ cards, coverImage }) {
     const [isRestarting, setIsRestarting] = useState(false);
     const [displayCards, setDisplayCards] = useState(cards);
     const [favoriteCardIds, setFavoriteCardIds] = useState(new Set());
+    const [hasLoadedFavorites, setHasLoadedFavorites] = useState(false);
+
+    useEffect(() => {
+        try {
+            const savedFavorites =
+                localStorage.getItem("favorite-card-ids");
+
+            if (savedFavorites) {
+                const favoriteIds = JSON.parse(savedFavorites);
+
+                if (Array.isArray(favoriteIds)) {
+                    setFavoriteCardIds(
+                        new Set(favoriteIds)
+                    );
+                }
+            }
+        } catch (error) {
+            console.error(
+                "Could not load favourite cards:",
+                error
+            );
+        } finally {
+            setHasLoadedFavorites(true);
+        }
+    }, []);
+
+    useEffect(() => {
+        if (!hasLoadedFavorites) return;
+
+        try {
+            localStorage.setItem(
+                "favorite-card-ids",
+                JSON.stringify([...favoriteCardIds])
+            );
+        } catch (error) {
+            console.error(
+                "Could not save favourite cards:",
+                error
+            );
+        }
+    }, [favoriteCardIds, hasLoadedFavorites]);
 
     function handleNextCard(){
         if(!hasStarted){
@@ -77,11 +118,13 @@ export default function DeckViewer({ cards, coverImage }) {
         !hasStarted || currentCardIndex < displayCards.length - 1
     );
     const remainingCards = displayCards.length - currentCardIndex - 1;
-    const currentCard = displayCards[currentCardIndex];
+    const currentCard = hasStarted ? displayCards[currentCardIndex] : null;
     const isCurrentCardFavorite =
         currentCard
             ? favoriteCardIds.has(currentCard.id)
             : false;
+    const canToggleFavorite = Boolean(currentCard);
+    
 
     return (
         <>
@@ -94,7 +137,7 @@ export default function DeckViewer({ cards, coverImage }) {
                                 onClick={handleNextCard}
                             />
                         ) : (
-                                <div className="card-deck relative mt-6 flex min-h-[400px] w-full items-center justify-center rounded-lg border-2 border-dashed border-stone-300 text-center text-stone-400">
+                            <div className="card-deck relative mt-6 flex min-h-[400px] w-full items-center justify-center rounded-lg border-2 border-dashed border-stone-300 text-center text-stone-400">
                                 No cards remaining
                                 <button
                                     type="button"
@@ -120,50 +163,13 @@ export default function DeckViewer({ cards, coverImage }) {
                             }`}>
                             {displayCards
                                 .slice(0, currentCardIndex + 1)
-                                .map((card, index) => {
-                                    const rotation =
-                                        index % 2 === 0 ? -2 + index * 0.5 : 2 - index * 0.5;
-
-                                    return (
-                                        <article
-                                            key={card.id}
-                                            className={`card-deck card-enter absolute inset-0 flex min-h-[400px] w-full flex-col justify-between overflow-hidden rounded-lg border border-stone-200 bg-white text-left shadow-sm ${card.image ? "p-0" : "p-12"}`}
-                                            style={{
-                                                transform: `rotate(${rotation}deg)`,
-                                                zIndex: index,
-                                            }}
-                                        >
-                                            {card.image ? (
-                                                <>
-                                                    <div className="absolute inset-0">
-                                                        <Image
-                                                            src={card.image}
-                                                            alt={card.caption}
-                                                            fill
-                                                            className="object-cover"
-                                                        />
-                                                    </div>
-
-                                                    {/* <p className="mt-6 text-center text-lg font-semibold text-stone-700">
-                                                        {card.caption}
-                                                    </p> */}
-                                                </>
-                                            ) : (
-                                                <>
-                                                    <span className="text-lg font-bold italic font-serif">
-                                                        {card.text}
-                                                    </span>
-
-                                                    {card.author && (
-                                                        <span className="text-sm text-stone-500">
-                                                            — {card.author}
-                                                        </span>
-                                                    )}
-                                                </>
-                                            )}
-                                        </article>
-                                    );
-                                })}
+                                .map((card, index) => (
+                                    <DeckCard
+                                        key={card.id}
+                                        card={card}
+                                        index={index}
+                                    />
+                                ))}
                         </div>
                     </>
                 ) : (
@@ -192,6 +198,7 @@ export default function DeckViewer({ cards, coverImage }) {
                 onRestart={handleRestart}
                 isCurrentCardFavorite={isCurrentCardFavorite}
                 onToggleFavorite={handleToggleFavorite}
+                canToggleFavorite={canToggleFavorite}
             />
         </>
     );
