@@ -19,7 +19,7 @@ export default async function DeckPage({ params }) {
     const selectedDeck = decks.find(
         (deck) => deck.id === deckId
     );
-    
+
     if (!selectedDeck) {
         notFound();
     }
@@ -33,7 +33,7 @@ export default async function DeckPage({ params }) {
                     href="/decks"
                     className="mb-5 text-sm uppercase tracking-[0.3em] text-stone-500"
                 >
-                    Back to decks
+                   ← Back to decks
                 </Link>
 
                 <h1 className="mt-3 text-4xl font-semibold tracking-tight">
