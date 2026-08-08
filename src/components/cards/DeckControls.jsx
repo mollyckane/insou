@@ -85,7 +85,7 @@ export default function DeckControls({
                 onClick={onToggleView}
                 className={controlButtonClasses}
             >
-                {viewMode === "deck" ? "Show all cards" : "Show as deck"}
+                {viewMode === "deck" ? "Show as grid" : "Show as deck"}
             </button>
 
             <button
