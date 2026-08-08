@@ -5,6 +5,7 @@ export default function DeckCard({
     index,
     isRestartingDeck,
     disableRotation = false,
+    className = "",
 }) {
     const rotation = disableRotation
         ? 0
@@ -17,7 +18,8 @@ export default function DeckCard({
     return (
         <article
             key={card.id}
-            className={`card-deck card-enter absolute inset-0 flex min-h-[400px] w-full flex-col justify-between overflow-hidden rounded-lg border border-stone-200 bg-white text-left shadow-sm ${card.image ? "p-0" : "p-12"}`}
+            className={`card-deck card-enter absolute inset-0 flex h-full min-h-0 w-full flex-col justify-between overflow-hidden rounded-lg border border-stone-200 bg-white text-left shadow-sm ${card.image ? "p-0" : "p-12"
+              } ${className}`}
             style={{
                 transform: `rotate(${rotation}deg)`,
                 zIndex: index,
@@ -40,12 +42,12 @@ export default function DeckCard({
                 </>
             ) : (
                 <>
-                    <span className="text-lg font-bold italic font-serif">
+                    <span className="text-lg font-bold italic font-serif whitespace-pre-line">
                         {card.text}
                     </span>
 
                     {card.author && (
-                        <span className="text-sm text-stone-500">
+                        <span className="text-sm text-stone-500 uppercase">
                             — {card.author}
                         </span>
                     )}

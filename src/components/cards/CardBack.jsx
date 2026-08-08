@@ -1,14 +1,16 @@
-export default function CardBack({ coverImage, onClick }) {
+export default function CardBack({
+    coverImage,
+    onClick,
+    className = "",
+}) {
     return (
         <button
             type="button"
-            onClick={onClick} 
-            className="card-deck rounded-lg border border-rose-300 shadow-sm transition hover:shadow-md hover:scale-102 min-h-[400px] cursor-pointer mt-6 flex flex-col justify-center"
+            onClick={onClick}
+            className={`card-deck aspect-[3/4] flex h-full min-h-0 w-full cursor-pointer flex-col justify-center rounded-lg border border-rose-300 bg-cover bg-center shadow-sm transition hover:scale-[1.02] hover:shadow-md ${className}`}
             style={{
-                backgroundImage: `url("${coverImage}")`, 
-                backgroundSize: 'cover', 
-                backgroundPosition: 'center' 
+                backgroundImage: `url("${coverImage}")`,
             }}
         />
     );
-}
+  }
