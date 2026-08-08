@@ -203,6 +203,7 @@ export default function useDeck(cards) {
         isCurrentCardFavorite,
         showFavoritesOnly,
         startDeck,
+        favoriteCardIds,
         handleNextCard,
         handlePreviousCard,
         handleShuffle,
