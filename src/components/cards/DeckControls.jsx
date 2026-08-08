@@ -28,7 +28,7 @@ export default function DeckControls({
                 onClick={onRestart}
                 className={controlButtonClasses}
             >
-                <span className="flex items-center text-1xl p-0 m-0">
+                <span className="flex items-center p-0 m-0">
                     ↻
                 </span>
             </button>
