@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { decks, quoteCards } from "@/lib/data";
+import { decks, quoteCards, affirmationCards, animalCards } from "@/lib/data";
 import DeckViewer from "@/components/cards/DeckViewer";
 
 export default async function DeckPage({ params }) {
@@ -22,6 +22,18 @@ export default async function DeckPage({ params }) {
                         coverImage={selectedDeck.coverImage}
                     />
                 )}  
+                {selectedDeck.id === "affirmation-cards" && (
+                    <DeckViewer
+                        cards={affirmationCards}
+                        coverImage={selectedDeck.coverImage}
+                    />
+                )} 
+                {selectedDeck.id === "animal-cards" && (
+                    <DeckViewer
+                        cards={animalCards}
+                        coverImage={selectedDeck.coverImage}
+                    />
+                )}
             </div>   
         </main>
     );
