@@ -13,6 +13,7 @@ export default function DeckViewer({
     const {
         isDeckStarted,
         isRestartingDeck,
+        allCards,
         displayedCards,
         currentCardIndex,
         remainingCardCount,
@@ -32,20 +33,31 @@ export default function DeckViewer({
     } = useDeck(cards);
 
     const [viewMode, setViewMode] = useState("deck");
+    const [areAllCardsFaceUp, setAreAllCardsFaceUp] = useState(false);
 
     function handleToggleView() {
-        setViewMode((currentMode) =>
-            currentMode === "deck" ? "grid" : "deck"
-        );
+        setViewMode((currentMode) => {
+            const nextMode = currentMode === "deck" ? "grid" : "deck";
+
+            if(nextMode === "grid"){
+                setAreAllCardsFaceUp(true);
+            }
+            if(nextMode === "deck"){
+                setAreAllCardsFaceUp(false);
+            }
+            return nextMode;
+        });
     }
 
     return (
         <>
             {viewMode === "grid" ? (
                 <DeckGridView
-                    cards={displayedCards}
+                    cards={allCards}
                     coverImage={coverImage}
                     favoriteCardIds={favoriteCardIds}
+                    showFavoritesOnly={showFavoritesOnly}
+                    areAllCardsFaceUp={areAllCardsFaceUp}
                 />
             ) : (
                 <DeckStackView

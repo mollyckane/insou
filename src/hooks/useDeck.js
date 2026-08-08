@@ -194,6 +194,7 @@ export default function useDeck(cards) {
     return {
         isDeckStarted,
         isRestartingDeck,
+        allCards: displayCards,
         displayedCards,
         currentCardIndex,
         remainingCardCount,
