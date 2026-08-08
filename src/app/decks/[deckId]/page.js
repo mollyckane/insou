@@ -17,7 +17,10 @@ export default async function DeckPage({ params }) {
                 <p className="mt-4 max-w-2xl text-stone-600">{selectedDeck.description}</p>
 
                 {selectedDeck.id === "quote-cards" && (
-                    <DeckViewer cards={quoteCards} />
+                    <DeckViewer 
+                        cards={quoteCards} 
+                        coverImage={selectedDeck.coverImage}
+                    />
                 )}  
             </div>   
         </main>
