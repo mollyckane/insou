@@ -3,7 +3,7 @@ import Image from 'next/image';
 export default function DeckCard({
     card,
     index,
-    isRestarting,
+    isRestartingDeck,
     disableRotation = false,
 }) {
     const rotation = disableRotation

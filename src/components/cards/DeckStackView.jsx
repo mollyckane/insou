@@ -7,11 +7,11 @@ import DeckCover from "@/components/cards/DeckCover";
 import EmptyDeckState from "@/components/cards/EmptyDeckState";
 
 export default function DeckStackView({
-    hasStarted,
-    isRestarting,
-    visibleCards,
+    isDeckStarted,
+    isRestartingDeck,
+    displayedCards,
     currentCardIndex,
-    remainingCards,
+    remainingCardCount,
     showFavoritesOnly,
     coverImage,
     onStart,
@@ -21,14 +21,14 @@ export default function DeckStackView({
     const cardsRef = useRef(null);
     const hasAutoScrolled = useRef(false);
 
-    const currentCards = visibleCards.slice(
+    const currentCards = displayedCards.slice(
         0,
         currentCardIndex + 1
     );
 
     useEffect(() => {
         if (
-            !hasStarted ||
+            !isDeckStarted ||
             hasAutoScrolled.current
         ) {
             return;
@@ -50,16 +50,16 @@ export default function DeckStackView({
         });
 
         hasAutoScrolled.current = true;
-    }, [hasStarted]);
+    }, [isDeckStarted]);
 
     return (
         <section className="mx-auto mt-12 grid max-w-5xl grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {!hasStarted ? (
+            {!isDeckStarted ? (
                 <DeckCover
                     coverImage={coverImage}
                     onStart={onStart}
                 />
-            ) : visibleCards.length === 0 ? (
+            ) : displayedCards.length === 0 ? (
                 <EmptyDeckState
                     message={
                         showFavoritesOnly
@@ -69,7 +69,7 @@ export default function DeckStackView({
                 />
             ) : (
                 <>
-                    {remainingCards > 0 ? (
+                    {remainingCardCount > 0 ? (
                         <CardBack
                             coverImage={coverImage}
                             onClick={onNextCard}
@@ -84,7 +84,7 @@ export default function DeckStackView({
 
                     <div
                         ref={cardsRef}
-                        className={`relative mt-6 min-h-[400px] w-full scroll-mt-6 ${isRestarting ? "deck-exit" : ""
+                        className={`relative mt-6 min-h-[400px] w-full scroll-mt-6 ${isRestartingDeck ? "deck-exit" : ""
                             }`}
                     >
                         {currentCards.map((card, index) => (

@@ -3,13 +3,13 @@
 import { useEffect, useState } from "react";
 
 export default function useDeck(cards) {
-    const [hasStarted, setHasStarted] =
+    const [isDeckStarted, setHasStarted] =
         useState(false);
 
     const [currentCardIndex, setCurrentCardIndex] =
         useState(0);
 
-    const [isRestarting, setIsRestarting] =
+    const [isRestartingDeck, setIsRestarting] =
         useState(false);
 
     const [displayCards, setDisplayCards] =
@@ -53,26 +53,26 @@ export default function useDeck(cards) {
         );
     }, [favoriteCardIds, hasLoadedFavorites]);
 
-    const visibleCards = showFavoritesOnly
+    const displayedCards = showFavoritesOnly
         ? displayCards.filter((card) =>
             favoriteCardIds.has(card.id)
         )
         : displayCards;
 
-    const remainingCards =
-        visibleCards.length -
+    const remainingCardCount =
+        displayedCards.length -
         currentCardIndex -
         1;
 
-    const currentCard = visibleCards[currentCardIndex];
+    const currentCard = displayedCards[currentCardIndex];
 
     const canGoPrevious =
-        hasStarted && currentCardIndex > 0;
+        isDeckStarted && currentCardIndex > 0;
 
     const canGoNext =
-        !hasStarted ||
+        !isDeckStarted ||
         currentCardIndex <
-        visibleCards.length - 1;
+        displayedCards.length - 1;
 
     const canToggleFavorite =
         Boolean(currentCard);
@@ -86,7 +86,7 @@ export default function useDeck(cards) {
     }
 
     function handleNextCard() {
-        if (!hasStarted) {
+        if (!isDeckStarted) {
             startDeck();
             return;
         }
@@ -130,7 +130,7 @@ export default function useDeck(cards) {
     }
 
     function handleRestart() {
-        if (isRestarting) return;
+        if (isRestartingDeck) return;
 
         setIsRestarting(true);
 
@@ -176,27 +176,27 @@ export default function useDeck(cards) {
     }
 
     useEffect(() => {
-        if (visibleCards.length === 0) {
+        if (displayedCards.length === 0) {
             setCurrentCardIndex(0);
             return;
         }
 
         if (
             currentCardIndex >=
-            visibleCards.length
+            displayedCards.length
         ) {
             setCurrentCardIndex(
-                visibleCards.length - 1
+                displayedCards.length - 1
             );
         }
-    }, [visibleCards.length, currentCardIndex]);
+    }, [displayedCards.length, currentCardIndex]);
 
     return {
-        hasStarted,
-        isRestarting,
-        visibleCards,
+        isDeckStarted,
+        isRestartingDeck,
+        displayedCards,
         currentCardIndex,
-        remainingCards,
+        remainingCardCount,
         canGoPrevious,
         canGoNext,
         canToggleFavorite,

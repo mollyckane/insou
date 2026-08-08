@@ -11,11 +11,11 @@ export default function DeckViewer({
     coverImage,
 }) {
     const {
-        hasStarted,
-        isRestarting,
-        visibleCards,
+        isDeckStarted,
+        isRestartingDeck,
+        displayedCards,
         currentCardIndex,
-        remainingCards,
+        remainingCardCount,
         canGoPrevious,
         canGoNext,
         canToggleFavorite,
@@ -43,17 +43,17 @@ export default function DeckViewer({
         <>
             {viewMode === "grid" ? (
                 <DeckGridView
-                    cards={visibleCards}
+                    cards={displayedCards}
                     coverImage={coverImage}
                     favoriteCardIds={favoriteCardIds}
                 />
             ) : (
                 <DeckStackView
-                    hasStarted={hasStarted}
-                    isRestarting={isRestarting}
-                    visibleCards={visibleCards}
+                    isDeckStarted={isDeckStarted}
+                    isRestartingDeck={isRestartingDeck}
+                    displayedCards={displayedCards}
                     currentCardIndex={currentCardIndex}
-                    remainingCards={remainingCards}
+                    remainingCardCount={remainingCardCount}
                     showFavoritesOnly={showFavoritesOnly}
                     coverImage={coverImage}
                     onStart={startDeck}

@@ -3,7 +3,7 @@
 import DeckCard from "@/components/cards/DeckCard";
 import EmptyDeckState from "@/components/cards/EmptyDeckState";
 
-export default function DeckGrid({ cards = [] }) {
+export default function DeckGridView({ cards = [] }) {
     if (cards.length === 0) {
         return (
             <EmptyDeckState message="No cards in this deck" />
