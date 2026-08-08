@@ -4,11 +4,15 @@ export default function DeckCard({
     card,
     index,
     isRestarting,
+    disableRotation = false,
 }) {
-    const rotation = 
-    index % 2 === 0 
-        ? -2 + index * 0.5
-         : 2 - index * 0.5;
+    const rotation = disableRotation
+        ? 0
+        : index % 2 === 0
+            ? -2
+            : index % 2 === 1
+                ? 2
+                : 0;
 
     return (
         <article
