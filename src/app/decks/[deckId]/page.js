@@ -5,6 +5,7 @@ import {
     quoteCards,
     affirmationCards,
     animalCards,
+    angelCards
 } from "@/lib/data";
 import DeckViewer from "@/components/cards/DeckViewer";
 
@@ -12,6 +13,7 @@ const cardsByDeckId = {
     "quote-cards": quoteCards,
     "affirmation-cards": affirmationCards,
     "animal-cards": animalCards,
+    "angel-numbers-cards": angelCards,
 };
 
 export default async function DeckPage({ params }) {
