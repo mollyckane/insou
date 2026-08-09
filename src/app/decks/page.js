@@ -1,4 +1,4 @@
-import { decks } from "../../lib/data";
+import { decks } from "@/lib/data";
 import Link from "next/link";
 
 export default function DecksPage() {
