@@ -19,39 +19,43 @@ export default function DeckCard({
         <article
             key={card.id}
             className={`card-deck card-enter absolute inset-0 flex h-full min-h-0 w-full flex-col justify-between overflow-hidden rounded-lg border border-stone-200 bg-white text-left shadow-sm ${card.image ? "p-0" : "p-12"
-              } ${className}`}
+                } ${className}`}
             style={{
                 transform: `rotate(${rotation}deg)`,
                 zIndex: index,
             }}
         >
-            {card.image ? (
-                <>
-                    <div className="absolute inset-0">
-                        <Image
-                            src={card.image}
-                            alt={card.caption}
-                            fill
-                            className="object-cover"
-                        />
-                    </div>
+            {card.number ? (
+                <div className="flex h-full flex-col items-center justify-center gap-6 p-12 text-center font-serif">
+                    <span className="text-6xl font-semibold tracking-[0.2em] text-stone-700">
+                        {card.number}
+                    </span>
 
-                    {/* <p className="mt-6 text-center text-lg font-semibold text-stone-700">
-                        {card.caption}
-                    </p> */}
-                </>
+                    <span className="text-lg leading-relaxed text-stone-600">
+                        {card.meaning}
+                    </span>
+                </div>
+            ) : card.image ? (
+                <div className="absolute inset-0">
+                    <Image
+                        src={card.image}
+                        alt={card.caption}
+                        fill
+                        className="object-cover"
+                    />
+                </div>
             ) : (
-                <>
-                    <span className="text-lg font-bold italic font-serif whitespace-pre-line">
+                <div className="flex h-full flex-col justify-between">
+                    <span className="whitespace-pre-line text-lg font-bold italic font-serif">
                         {card.text}
                     </span>
 
                     {card.author && (
-                        <span className="text-sm text-stone-500 uppercase">
+                        <span className="text-sm uppercase text-stone-500">
                             — {card.author}
                         </span>
                     )}
-                </>
+                </div>
             )}
         </article>
     );
