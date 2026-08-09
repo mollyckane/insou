@@ -8,7 +8,7 @@ export default function DeckCover({
         <button
             type="button"
             onClick={onStart}
-            className="card-deck aspect-[3/4] mt-6 flex min-h-[400px] cursor-pointer flex-col justify-center rounded-lg border border-rose-300 shadow-sm transition hover:scale-102 hover:shadow-md"
+            className="card-deck aspect-[3/4] flex min-h-[400px] cursor-pointer flex-col justify-center rounded-lg border border-rose-300 shadow-sm transition hover:scale-102 hover:shadow-md"
             style={{
                 backgroundImage: `linear-gradient(
                     rgba(0, 0, 0, 0.1),
