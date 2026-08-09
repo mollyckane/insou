@@ -84,7 +84,7 @@ export default function DeckStackView({
 
                     <div
                         ref={cardsRef}
-                        className={`relative min-h-[400px] w-full scroll-mt-6 ${isRestartingDeck ? "deck-exit" : ""
+                        className={`relative aspect-[3/4] w-full scroll-mt-6 ${isRestartingDeck ? "deck-exit" : ""
                             }`}
                     >
                         {currentCards.map((card, index) => (
