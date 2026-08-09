@@ -23,62 +23,94 @@ export default function DeckControls({
 
     return (
         <div className="mt-8 flex flex-wrap items-center gap-3">
-            <button
-                type="button"
-                onClick={onRestart}
-                className={controlButtonClasses}
-            >
-                <span className="flex items-center p-0 m-0">
-                    ↻
-                </span>
-            </button>
-            <button
-                type="button"
-                onClick={onPrevious}
-                disabled={previousDisabled}
-                className={controlButtonClasses}
-            >
-                Previous
-            </button>
-
-            <button
-                type="button"
-                onClick={onNext}
-                disabled={nextDisabled}
-                className={controlButtonClasses}
-            >
-                Next
-            </button>
-
-            <button
-                type="button"
-                onClick={onShuffle}
-                className={controlButtonClasses}
-            >
-                Shuffle
-            </button>
-
-            <button
-                type="button"
-                onClick={onToggleFavorite}
-                disabled={!canToggleFavorite}
-                aria-pressed={isCurrentCardFavorite}
-                aria-label={isCurrentCardFavorite ? "Unfavourite this card" : "Favourite this card"}
-                className={`${controlButtonClasses} ${isCurrentCardFavorite ? "group bg-yellow-500 border-yellow-600 hover:bg-stone-300 hover:border-stone-400 hover:text-stone-700 text-white font-bold" : ""}`}
-            >
-                {isCurrentCardFavorite ? (
-                    <>
-                        <span className="group-hover:hidden">
-                            ★ Favourited
+            {viewMode === "deck" ? (
+                <>
+                    <button
+                        type="button"
+                        onClick={onRestart}
+                        className={controlButtonClasses}
+                    >
+                        <span className="m-0 flex items-center p-0">
+                            ↻
                         </span>
-                        <span className="hidden group-hover:inline">
-                            x Unfavourite
-                        </span>
-                    </>
-                ) : (
-                    " ☆ Favourite"
-                )}
-            </button>
+                    </button>
+
+                    <button
+                        type="button"
+                        onClick={onPrevious}
+                        disabled={previousDisabled}
+                        className={controlButtonClasses}
+                    >
+                        Previous
+                    </button>
+
+                    <button
+                        type="button"
+                        onClick={onNext}
+                        disabled={nextDisabled}
+                        className={controlButtonClasses}
+                    >
+                        Next
+                    </button>
+
+                    <button
+                        type="button"
+                        onClick={onShuffle}
+                        className={controlButtonClasses}
+                    >
+                        Shuffle
+                    </button>
+
+                    <button
+                        type="button"
+                        onClick={onToggleFavorite}
+                        disabled={!canToggleFavorite}
+                        aria-pressed={isCurrentCardFavorite}
+                        aria-label={
+                            isCurrentCardFavorite
+                                ? "Unfavourite this card"
+                                : "Favourite this card"
+                        }
+                        className={`${controlButtonClasses} ${isCurrentCardFavorite
+                                ? "group border-yellow-600 bg-yellow-500 font-bold text-white hover:border-stone-400 hover:bg-stone-300 hover:text-stone-700"
+                                : ""
+                            }`}
+                    >
+                        {isCurrentCardFavorite ? (
+                            <>
+                                <span className="group-hover:hidden">
+                                    ★ Favourited
+                                </span>
+
+                                <span className="hidden group-hover:inline">
+                                    x Unfavourite
+                                </span>
+                            </>
+                        ) : (
+                            " ☆ Favourite"
+                        )}
+                    </button>
+                </>
+            ) : (
+                <>
+                    <button
+                            type="button"
+                            onClick={onRestart}
+                            className={controlButtonClasses}
+                        >
+                            <span className="m-0 flex items-center p-0">
+                                ↻
+                            </span>
+                        </button>
+                    <button
+                        type="button"
+                        onClick={onShuffle}
+                        className={controlButtonClasses}
+                    >
+                        Shuffle
+                    </button>
+                </>
+            )}
 
             <button
                 type="button"
@@ -93,7 +125,9 @@ export default function DeckControls({
                 onClick={onToggleFavoritesOnly}
                 className={controlButtonClasses}
             >
-                {showFavoritesOnly ? "Show all cards" : "Show favourites"}
+                {showFavoritesOnly
+                    ? "Show all cards"
+                    : "Show favourites"}
             </button>
         </div>
     );
