@@ -64,7 +64,7 @@ export default function useDeck(cards) {
         currentCardIndex -
         1;
 
-    const currentCard = displayedCards[currentCardIndex];
+    const currentCard = displayedCards[currentCardIndex] ?? null;
 
     const canGoPrevious =
         isDeckStarted && currentCardIndex > 0;
@@ -75,7 +75,7 @@ export default function useDeck(cards) {
         displayedCards.length - 1;
 
     const canToggleFavorite =
-        Boolean(currentCard);
+        isDeckStarted && Boolean(currentCard);
 
     const isCurrentCardFavorite = currentCard
         ? favoriteCardIds.has(currentCard.id)
@@ -143,7 +143,7 @@ export default function useDeck(cards) {
     }
 
     function handleToggleFavorite() {
-        if (!currentCard) return;
+        if (!isDeckStarted || !currentCard) return;
 
         setFavoriteCardIds((previousFavorites) => {
             const updatedFavorites = new Set(
