@@ -55,13 +55,13 @@ const NeuralGlow = () => {
         float p = clamp(length(pointer), 0., 1.);
         p = .5 * pow(1. - p, 2.);
 
-        float t = .001 * u_time;
+        float t = .0004 * u_time;
         vec3 color = vec3(0.);
 
         float noise = neuro_shape(uv, t, p);
-        noise = 1.2 * pow(noise, 3.);
+        noise = 1.1 * pow(noise, 3.);
         noise += pow(noise, 10.);
-        noise = max(.0, noise - .5);
+        noise = max(.0, noise - .4);
         noise *= (1. - length(vUv - .5));
 
         // === Pastel white / pink / purple / blue ===
@@ -247,7 +247,7 @@ const NeuralGlow = () => {
         <canvas
             ref={canvasRef}
             className="fixed inset-0 w-full h-full pointer-events-none opacity-95"
-            style={{ backgroundColor: 'transparent', zIndex: 20 }}
+            style={{ backgroundColor: 'transparent', zIndex: 0 }}
         />
     );
 };
