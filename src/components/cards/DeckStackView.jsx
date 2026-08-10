@@ -92,6 +92,7 @@ export default function DeckStackView({
                                 key={card.id}
                                 card={card}
                                 index={index}
+                                variant="stack"
                             />
                         ))}
                     </div>

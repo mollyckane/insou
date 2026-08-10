@@ -17,7 +17,7 @@ export default function DecksPage() {
                 </p>
             </div>
             {/* Deck cards */}
-            <div className="mx-auto max-w-5xl card-decks mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="mx-auto max-w-5xl card-decks mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
                 {decks.map((deck) => (
                     <Link
                         href={`/decks/${deck.id}`}

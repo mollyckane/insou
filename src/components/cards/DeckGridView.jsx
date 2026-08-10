@@ -72,7 +72,7 @@ export default function DeckGridView({
     return (
         <section
             aria-label="Cards in this deck"
-            className="mx-auto mt-12 grid max-w-5xl grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
+            className="mx-auto mt-12 grid max-w-5xl grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4"
         >
             {cards.map((card) => {
                 const isFavorite = favoriteCardIds.has(card.id);
@@ -81,6 +81,7 @@ export default function DeckGridView({
                     <GridCard
                         key={card.id}
                         card={card}
+                        variant="grid"
                         coverImage={coverImage}
                         isFavorite={favoriteCardIds.has(card.id)}
                         showFavoritesOnly={showFavoritesOnly}
