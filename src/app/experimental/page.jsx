@@ -1,12 +1,12 @@
 import AuroraWrapper from "@/app/experimental/AuroraWrapper";
-import NeuralGlow from "@/app/experimental/NeuralGlow";
-import MagneticBlobCursor from "@/app/experimental/MagneticButton";
+import NeuralGlow from "@/components/effects/NeuralGlow";
+import BlobCursor from "@/components/effects/BlobCursor";
 
 export default function HomePage() {
     return (
         <AuroraWrapper>
             <NeuralGlow />
-            <MagneticBlobCursor />
+                <BlobCursor />
 
             <main className="mx-auto flex min-h-screen max-w-5xl flex-col justify-center px-4 py-16 text-slate-100">
                 <main className="mx-auto flex min-h-screen max-w-5xl flex-col justify-center px-4 py-16 text-slate-100">
